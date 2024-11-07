@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "new": "cpp",
+        "string": "cpp",
+        "__config": "cpp",
+        "ostream": "cpp",
+        "variant": "cpp",
+        "istream": "cpp",
+        "thread": "cpp",
+        "string_view": "cpp",
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp"
+    }
+}
