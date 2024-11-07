@@ -141,7 +141,7 @@ void push_msg(string msg_chat, int session, int i){
     send(Connections[sessions[session][i]], msg_chat.c_str(), msg_size, 0);
 }
 
-void push_play_game(int index, int session) {
+void push_play_game( int session) {
     Packet msgtype = P_PlayGame;
     send(Connections[sessions[session][0]], (char*)&msgtype, sizeof(Packet), 0);
     send(Connections[sessions[session][1]], (char*)&msgtype, sizeof(Packet), 0);
@@ -202,7 +202,7 @@ bool ProcessPacket(int index, Packet packettype) {
             push_status_exit_game(1,session, -3);
              break;
         }
-        push_play_game(index, session);
+        push_play_game( session);
         send(Connections[sessions[session][0]], (char*)&(who_go[session]), sizeof(int), 0);
         who_go[session] = (who_go[session]+1)%2;
         send(Connections[sessions[session][1]], (char*)&(who_go[session]), sizeof(int), 0);
@@ -221,7 +221,7 @@ bool ProcessPacket(int index, Packet packettype) {
              push_msg("You are the second player!\nStarting the game...\nYou are playing noughts (O). Good luck!", session, 1);
             cout << "Starting game session " << session + 1<< "..."<< endl; 
             sess_now++;
-            push_play_game(index, session);
+            push_play_game(session);
             srand(time(nullptr));
             who_go[session] = rand()%2;
             send(Connections[sessions[session][0]], (char*)&(who_go[session]), sizeof(int), 0);
@@ -277,7 +277,7 @@ void ServerHandler() {
     
     Packet packettype;
     while(true) {
-        int checker = recv(Connections[index],(char*)&packettype, sizeof(Packet), 0);
+        int checker =recv(Connections[index],(char*)&packettype, sizeof(Packet), 0);
        
         if(!ProcessPacket(index, packettype)) {
             break;

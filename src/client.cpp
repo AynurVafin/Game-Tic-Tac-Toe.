@@ -131,7 +131,6 @@ void draw_game( vector<vector<char> > &board, int check_progress){
 //отправка сообщений чата
 void chat_message(){
     draw_header();
-    int number_pl;
     cout << "!!! Please write only \"/exit\" to exit the chat !!!\n\n";
     string msg_chat;
     while(true) {
@@ -243,7 +242,7 @@ int client(int argc, char* argv[]) {
     } else {
         string check = argv[2];
         int finded;
-        if((finded = check.find(":")) == string::npos) {
+        if(static_cast<size_t>(finded = check.find(":")) == string::npos) {
             return error("Invalid connect format, please usage format: \"127.0.0.1:PORT\"");
         } else {
             string cpy_Ip = check.substr(0, finded);
@@ -266,8 +265,7 @@ int client(int argc, char* argv[]) {
         .sin_port = htons(PORT) // брать из адресной строки
     };
     cout << "TicTacToe client version 1.0.0" << endl;
-    cout << "Connecting server at " << argv[2] << "...." << endl;
-    int sizeof_caddr = sizeof(caddr);   
+    cout << "Connecting server at " << argv[2] << "...." << endl;  
     socketClient = socket(AF_INET, SOCK_STREAM, 0);
     if (connect(socketClient, (struct sockaddr*)&caddr, sizeof(caddr)) != 0) {
         string err = "Error: failed to connect to server " + static_cast<string>(argv[2]);
